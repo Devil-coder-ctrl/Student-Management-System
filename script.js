@@ -1,26 +1,12 @@
-script.js;
-// Student data
 let students = JSON.parse(localStorage.getItem("students")) || [];
+let editingIndex = -1;
 
-// Form and table elements
-const studentForm = document.getElementById("studentForm");
-const studentTableBody = document.getElementById("studentTableBody");
+const form = document.getElementById("studentForm");
+const tableBody = document.getElementById("studentTableBody");
 const searchInput = document.getElementById("searchInput");
 
-// Display students
 function displayStudents(studentList = students) {
-  studentTableBody.innerHTML = "";
-
-  if (studentList.length === 0) {
-    studentTableBody.innerHTML = `
-            <tr>
-                <td colspan="8" style="text-align:center;">
-                    No students found
-                </td>
-            </tr>
-        `;
-    return;
-  }
+  tableBody.innerHTML = "";
 
   studentList.forEach((student, index) => {
     const row = document.createElement("tr");
@@ -33,7 +19,6 @@ function displayStudents(studentList = students) {
             <td>${student.phone}</td>
             <td>${student.email}</td>
             <td>${student.cgpa}</td>
-
             <td>
                 <button class="edit-btn" onclick="editStudent(${index})">
                     Edit
@@ -45,58 +30,71 @@ function displayStudents(studentList = students) {
             </td>
         `;
 
-    studentTableBody.appendChild(row);
+    tableBody.appendChild(row);
   });
+
+  updateDashboard();
 }
 
-// Add Student
-studentForm.addEventListener("submit", function (event) {
+function updateDashboard() {
+  document.getElementById("totalStudents").textContent = students.length;
+
+  if (students.length === 0) {
+    document.getElementById("averageCGPA").textContent = "0.00";
+  } else {
+    const totalCGPA = students.reduce(
+      (sum, student) => sum + Number(student.cgpa),
+      0,
+    );
+
+    const average = totalCGPA / students.length;
+
+    document.getElementById("averageCGPA").textContent = average.toFixed(2);
+  }
+
+  const departments = new Set(
+    students.map((student) => student.department.toLowerCase()),
+  );
+
+  document.getElementById("totalDepartments").textContent = departments.size;
+}
+
+form.addEventListener("submit", function (event) {
   event.preventDefault();
 
   const student = {
-    studentId: document.getElementById("studentId").value,
-    name: document.getElementById("name").value,
-    department: document.getElementById("department").value,
-    semester: document.getElementById("semester").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value,
+    studentId: document.getElementById("studentId").value.trim(),
+    name: document.getElementById("name").value.trim(),
+    department: document.getElementById("department").value.trim(),
+    semester: document.getElementById("semester").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
     cgpa: document.getElementById("cgpa").value,
   };
 
-  students.push(student);
+  if (editingIndex === -1) {
+    students.push(student);
+  } else {
+    students[editingIndex] = student;
+    editingIndex = -1;
+  }
 
-  saveStudents();
+  localStorage.setItem("students", JSON.stringify(students));
 
+  form.reset();
   displayStudents();
-
-  studentForm.reset();
-
-  alert("Student added successfully!");
 });
 
-// Save students
-function saveStudents() {
-  localStorage.setItem("students", JSON.stringify(students));
-}
-
-// Delete Student
 function deleteStudent(index) {
-  const confirmDelete = confirm(
-    "Are you sure you want to delete this student?",
-  );
-
-  if (confirmDelete) {
+  if (confirm("Are you sure you want to delete this student?")) {
     students.splice(index, 1);
 
-    saveStudents();
+    localStorage.setItem("students", JSON.stringify(students));
 
     displayStudents();
-
-    alert("Student deleted successfully!");
   }
 }
 
-// Edit Student
 function editStudent(index) {
   const student = students[index];
 
@@ -108,11 +106,7 @@ function editStudent(index) {
   document.getElementById("email").value = student.email;
   document.getElementById("cgpa").value = student.cgpa;
 
-  students.splice(index, 1);
-
-  saveStudents();
-
-  displayStudents();
+  editingIndex = index;
 
   window.scrollTo({
     top: 0,
@@ -120,24 +114,16 @@ function editStudent(index) {
   });
 }
 
-// Search Student
 searchInput.addEventListener("input", function () {
   const searchText = searchInput.value.toLowerCase();
 
-  const filteredStudents = students.filter((student) => {
-    return (
-      student.studentId.toLowerCase().includes(searchText) ||
-      student.name.toLowerCase().includes(searchText) ||
-      student.department.toLowerCase().includes(searchText) ||
-      student.semester.toLowerCase().includes(searchText) ||
-      student.phone.toLowerCase().includes(searchText) ||
-      student.email.toLowerCase().includes(searchText) ||
-      student.cgpa.toLowerCase().includes(searchText)
-    );
-  });
+  const filteredStudents = students.filter((student) =>
+    Object.values(student).some((value) =>
+      String(value).toLowerCase().includes(searchText),
+    ),
+  );
 
   displayStudents(filteredStudents);
 });
 
-// Display students when page loads
 displayStudents();

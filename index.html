@@ -1,123 +1,80 @@
-index.html
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Student Management System</title>
-
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="container">
-      <!-- Header -->
-      <header>
-        <h1>Student Management System</h1>
-        <p>Manage student information easily</p>
-      </header>
+    <header>
+      <h1>Student Management System</h1>
+      <p>Manage student information easily</p>
+    </header>
 
-      <!-- Add Student Section -->
+    <main class="container">
+      <!-- Dashboard -->
+      <section class="dashboard">
+        <div class="card">
+          <h3>Total Students</h3>
+          <p id="totalStudents">0</p>
+        </div>
+
+        <div class="card">
+          <h3>Average CGPA</h3>
+          <p id="averageCGPA">0.00</p>
+        </div>
+
+        <div class="card">
+          <h3>Departments</h3>
+          <p id="totalDepartments">0</p>
+        </div>
+      </section>
+
+      <!-- Add Student -->
       <section class="form-section">
         <h2>Add Student</h2>
 
         <form id="studentForm">
-          <div class="form-grid">
-            <!-- 1. Student ID -->
-            <div class="input-group">
-              <label for="studentId">Student ID</label>
-              <input
-                type="number"
-                id="studentId"
-                placeholder="Enter Student ID"
-                required
-              />
-            </div>
+          <input type="text" id="studentId" placeholder="Student ID" required />
 
-            <!-- 2. Name -->
-            <div class="input-group">
-              <label for="name">Name</label>
-              <input
-                type="text"
-                id="name"
-                placeholder="Enter Student Name"
-                required
-              />
-            </div>
+          <input type="text" id="name" placeholder="Name" required />
 
-            <!-- 3. Department -->
-            <div class="input-group">
-              <label for="department">Department</label>
-              <input
-                type="text"
-                id="department"
-                placeholder="Enter Department"
-                required
-              />
-            </div>
+          <input
+            type="text"
+            id="department"
+            placeholder="Department"
+            required
+          />
 
-            <!-- 4. Semester -->
-            <div class="input-group">
-              <label for="semester">Semester</label>
-              <input
-                type="number"
-                id="semester"
-                placeholder="Enter Semester"
-                required
-              />
-            </div>
+          <input type="text" id="semester" placeholder="Semester" required />
 
-            <!-- 5. Phone -->
-            <div class="input-group">
-              <label for="phone">Phone</label>
-              <input
-                type="tel"
-                id="phone"
-                placeholder="Enter Phone Number"
-                required
-              />
-            </div>
+          <input type="tel" id="phone" placeholder="Phone" required />
 
-            <!-- 6. Email -->
-            <div class="input-group">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter Email"
-                required
-              />
-            </div>
+          <input type="email" id="email" placeholder="Email" required />
 
-            <!-- 7. CGPA -->
-            <div class="input-group">
-              <label for="cgpa">CGPA</label>
-              <input
-                type="number"
-                id="cgpa"
-                placeholder="Enter CGPA"
-                step="0.01"
-                min="0"
-                max="4"
-                required
-              />
-            </div>
-          </div>
+          <input
+            type="number"
+            id="cgpa"
+            placeholder="CGPA"
+            min="0"
+            max="4"
+            step="0.01"
+            required
+          />
 
-          <button type="submit" class="add-btn">Add Student</button>
+          <button type="submit">Add Student</button>
         </form>
       </section>
 
-      <!-- Student List Section -->
+      <!-- Student List -->
       <section class="student-section">
         <div class="section-header">
           <h2>Student List</h2>
 
           <input type="text" id="searchInput" placeholder="Search student..." />
         </div>
-
-        <!-- Student Table -->
 
         <div class="table-container">
           <table>
@@ -134,15 +91,12 @@ index.html
               </tr>
             </thead>
 
-            <tbody id="studentTableBody">
-              <!-- Students will appear here -->
-            </tbody>
+            <tbody id="studentTableBody"></tbody>
           </table>
         </div>
       </section>
-    </div>
+    </main>
 
-    <!-- JavaScript -->
     <script src="script.js"></script>
   </body>
 </html>
