@@ -1,0 +1,148 @@
+index.html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <h1>Student Management System</h1>
+        <p>Manage student information easily</p>
+      </header>
+
+      <!-- Add Student Section -->
+      <section class="form-section">
+        <h2>Add Student</h2>
+
+        <form id="studentForm">
+          <div class="form-grid">
+            <!-- 1. Student ID -->
+            <div class="input-group">
+              <label for="studentId">Student ID</label>
+              <input
+                type="number"
+                id="studentId"
+                placeholder="Enter Student ID"
+                required
+              />
+            </div>
+
+            <!-- 2. Name -->
+            <div class="input-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter Student Name"
+                required
+              />
+            </div>
+
+            <!-- 3. Department -->
+            <div class="input-group">
+              <label for="department">Department</label>
+              <input
+                type="text"
+                id="department"
+                placeholder="Enter Department"
+                required
+              />
+            </div>
+
+            <!-- 4. Semester -->
+            <div class="input-group">
+              <label for="semester">Semester</label>
+              <input
+                type="number"
+                id="semester"
+                placeholder="Enter Semester"
+                required
+              />
+            </div>
+
+            <!-- 5. Phone -->
+            <div class="input-group">
+              <label for="phone">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="Enter Phone Number"
+                required
+              />
+            </div>
+
+            <!-- 6. Email -->
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter Email"
+                required
+              />
+            </div>
+
+            <!-- 7. CGPA -->
+            <div class="input-group">
+              <label for="cgpa">CGPA</label>
+              <input
+                type="number"
+                id="cgpa"
+                placeholder="Enter CGPA"
+                step="0.01"
+                min="0"
+                max="4"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="add-btn">Add Student</button>
+        </form>
+      </section>
+
+      <!-- Student List Section -->
+      <section class="student-section">
+        <div class="section-header">
+          <h2>Student List</h2>
+
+          <input type="text" id="searchInput" placeholder="Search student..." />
+        </div>
+
+        <!-- Student Table -->
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>CGPA</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="studentTableBody">
+              <!-- Students will appear here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
